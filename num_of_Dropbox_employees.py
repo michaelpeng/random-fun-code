@@ -12,11 +12,7 @@ def waiting_phrase():
     time.sleep(.1)
   print()
 
-def print_employee_count():
-  global num_of_employees
-  print("Dropbox has " + str(num_of_employees) + " employees!")  
-
-def employee_count():
+def calculate_employee_count():
   url = "http://dropbox.com/about"
   response = requests.get(url)
   data = response.content
@@ -27,8 +23,12 @@ def employee_count():
   num_of_employees = data_string.count('bubble-dropdown bottom')
   is_done = True
 
+def print_employee_count():
+  global num_of_employees
+  print("Dropbox has " + str(num_of_employees) + " employees!")
+
 waiting_thread = threading.Thread(target=waiting_phrase)
-counting_thread = threading.Thread(target=employee_count)
+counting_thread = threading.Thread(target=calculate_employee_count)
 printing_thread = threading.Thread(target=print_employee_count)
 
 waiting_thread.start()
